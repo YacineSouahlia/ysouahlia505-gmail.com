@@ -26,7 +26,7 @@ if ($conn->connect_error) {
 }
 $conn->set_charset("utf8mb4");
 
-// --- Fetch User Information (to ensure it's a student) ---
+// --- Fetch User Information  ---
 $user = null;
 $stmt_user = $conn->prepare("SELECT first_name, last_name, user_type FROM users WHERE id = ?");
 if ($stmt_user) {
@@ -40,7 +40,7 @@ if ($stmt_user) {
     die("Erreur lors de la récupération des informations utilisateur.");
 }
 
-// If user not found or not a student, redirect
+// If user not found or not a student
 if (!$user) {
     session_destroy();
     header("Location: login.php?error=user_not_found");
@@ -54,7 +54,7 @@ if ($user['user_type'] !== 'student') {
 // --- Fetch Saved Internships for the Student ---
 $savedInternships = [];
 $fetch_error = null; // Initialize fetch error
-// JOIN condition remains the same - ensure it's correct for your schema
+// JOIN condition remains the same
 $stmt_saved = $conn->prepare("
     SELECT
         i.id AS internship_id,
@@ -91,7 +91,7 @@ $conn->close();
 
 // --- Handle Status/Error Messages from Redirects ---
 $status_message = '';
-$error_message = $fetch_error ?? ''; // Use fetch error if set
+$error_message = $fetch_error ?? '';
 
 if (isset($_GET['status'])) {
     if ($_GET['status'] == 'removed') {
@@ -120,13 +120,13 @@ if (isset($_GET['error'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Stages Sauvegardés - StageConnect</title>
-    <link rel="stylesheet" href="css/style.css"> <!-- Make sure this path is correct -->
+    <link rel="stylesheet" href="css/style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Basic styles */
         body { background-color: #f4f7f6; font-family: sans-serif; line-height: 1.6; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
         main { flex: 1; }
-        .page-container { max-width: 1200px; /* Wider container for grid */ margin: 2rem auto; padding: 0 1rem; }
+        .page-container { max-width: 1200px;  margin: 2rem auto; padding: 0 1rem; }
         .page-container h2 { margin-bottom: 1.5rem; color: #333; font-weight: 600; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 0.75rem; }
 
         /* Message Styles */
@@ -137,17 +137,17 @@ if (isset($_GET['error'])) {
         /* Grid Layout for Internship List */
         .internships-list {
             display: grid;
-            /* Create responsive columns: min 300px, max 1fr (equal share of space) */
+            /* Create responsive columns: min 300px, max 1fr  */
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem; /* Spacing between grid items */
-            padding: 0; /* Remove padding if cards handle their own */
-            list-style: none; /* Remove if it was a list */
+            gap: 1.5rem; 
+            padding: 0; 
+            list-style: none; 
         }
 
         /* Individual Card Styles */
         .internship-card {
             background-color: #fff;
-            padding: 1.5rem; /* Internal padding for card content */
+            padding: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.05);
             display: flex; /* Use flexbox for internal layout */
@@ -158,10 +158,10 @@ if (isset($_GET['error'])) {
             border-bottom: none;
         }
 
-        .internship-card h4 { margin: 0 0 0.4rem 0; font-size: 1.15rem; /* Slightly smaller for grid */ font-weight: 600; }
+        .internship-card h4 { margin: 0 0 0.4rem 0; font-size: 1.15rem;  font-weight: 600; }
         .internship-card h4 a { color: #333; text-decoration: none; }
         .internship-card h4 a:hover { color: #0056b3; }
-        .internship-card p { margin: 0; /* Remove default p margin */ color: #666; font-size: 0.9rem; /* Smaller text */ display: flex; align-items: center; gap: 0.5rem;}
+        .internship-card p { margin: 0;  color: #666; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;}
         .internship-card p i { color: #888; width: 1.1em; text-align: center;}
 
         /* Card Actions */
@@ -203,7 +203,7 @@ if (isset($_GET['error'])) {
         .no-data a { color: #007bff; text-decoration: none; font-weight: 500;}
         .no-data a:hover { text-decoration: underline; }
 
-        /* Header & Footer Styles - Copied */
+        /* Header & Footer Styles  */
         header { background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;}
         .logo h1 a { color: #0056b3; text-decoration: none; font-weight: bold; font-size: 1.5rem;}
         nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 1rem; flex-wrap: wrap; }
@@ -277,7 +277,7 @@ if (isset($_GET['error'])) {
                         <?php endif; ?>
                     </div>
 
-                    <!-- Card Actions (Pushed to bottom by margin-top: auto) -->
+                    <!-- Card Actions  -->
                     <div class="card-actions">
                         <a href="internship-details.php?id=<?php echo $internship['internship_id']; ?>" class="btn-details"><i class="fas fa-eye"></i> Détails</a>
 
